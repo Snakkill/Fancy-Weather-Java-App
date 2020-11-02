@@ -47,6 +47,9 @@ public class MainActivity extends Activity {
                         startActivity(intent);
                         Toast.makeText(MainActivity.this, "Weather", Toast.LENGTH_SHORT).show();
                         break;
+                    case R.id.action_overlay:
+                        Toast.makeText(MainActivity.this, "Overlay", Toast.LENGTH_SHORT).show();
+                        break;
                     case R.id.action_home:
                         Toast.makeText(MainActivity.this, "Home", Toast.LENGTH_SHORT).show();
                         break;

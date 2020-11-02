@@ -1,5 +1,6 @@
 package com.example.locationexample;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.locationexample.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -10,8 +11,10 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -21,6 +24,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -40,7 +44,33 @@ public class output extends AppCompatActivity implements OnMapReadyCallback {
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.action_results:
+                        Toast.makeText(output.this, "Weather", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.action_overlay:
+                        Toast.makeText(output.this, "Overlay", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.action_home:
+                        Toast.makeText(output.this, "Home", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(output.this, MainActivity.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.action_cal:
 
+                        intent = new Intent(output.this, HistoryOutput.class);
+                        startActivity(intent);
+                        Toast.makeText(output.this, "Calender", Toast.LENGTH_SHORT).show();
+                        break;
+
+                }
+                return true;
+            }
+        });
 
 
 
@@ -131,7 +161,7 @@ public class output extends AppCompatActivity implements OnMapReadyCallback {
 
                             TempBanner.setText("IT FEELS LIKE "+T_feel+"°F Today!!!");
                             TempOut.setText("Temperature                 High "+T_high+"°F\n                                          Low  "+T_low+"°F \n Humidity:                           "+                        humidity+" % \n Pressure:                         "+                        pressure
-                                    +"hpa \n Wind Speed                         "+speed+"mph \n Sunrise:                         "+sunrise+" AM \n Sunset:                         "+sunset+"pm");
+                                    +"hpa \n Wind Speed                         "+speed+"mph \n Sunrise:                         "+sunrise+" AM \n Sunset:                         "+sunset+"pm \n Coordinates:                  "+lon+",  "+lat+"}");
                             coordsOut.setText(" Coordinates: {"+lon+","+lat+"}");
 
                         } catch (JSONException e) {
@@ -160,6 +190,7 @@ public class output extends AppCompatActivity implements OnMapReadyCallback {
         LatLng sydney = new LatLng(26, -80);
         mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        mMap.getMaxZoomLevel();
     }
 
 }

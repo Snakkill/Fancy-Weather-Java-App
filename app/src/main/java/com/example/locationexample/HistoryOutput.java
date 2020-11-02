@@ -126,7 +126,7 @@ public class HistoryOutput extends AppCompatActivity implements OnMapReadyCallba
 
                             TempBanner.setText("IT FEELS LIKE "+T_feel+"°F Today!!!");
                             TempOut.setText("Temperature                 High "+T_high+"°F\n                                          Low  "+T_low+"°F \n Humidity:                           "+                        humidity+" % \n Pressure:                         "+                        pressure
-                                    +"hpa \n Wind Speed                         "+speed+"mph \n Sunrise:                         "+sunrise+" AM \n Sunset:                         "+sunset+"pm");
+                                    +"hpa \n Wind Speed                         "+speed+"mph \n Sunrise:                         "+sunrise+" AM \n Sunset:                         "+sunset+"pm \n Coordinates:                  "+lon+",  "+lat+"}");
                             coordsOut.setText(" Coordinates: {"+lon+","+lat+"}");
 
                         } catch (JSONException e) {

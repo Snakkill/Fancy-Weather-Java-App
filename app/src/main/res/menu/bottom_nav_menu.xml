@@ -8,6 +8,12 @@
         android:title="Home"
         app:showAsAction="ifRoom" />
     <item
+    android:id="@+id/action_overlay"
+    android:enabled="true"
+    android:icon="@drawable/ic_action_overlay"
+    android:title="Overlay"
+    app:showAsAction="ifRoom" />
+    <item
         android:id="@+id/action_results"
         android:enabled="true"
         android:icon="@drawable/ic_action_results"
