@@ -190,7 +190,7 @@ public class output extends AppCompatActivity implements OnMapReadyCallback {
         LatLng sydney = new LatLng(26, -80);
         mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-        mMap.getMaxZoomLevel();
+
     }
 
 }
