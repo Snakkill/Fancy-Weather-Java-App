@@ -31,122 +31,144 @@ public class HistoryOutput extends AppCompatActivity implements OnMapReadyCallba
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_output);
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
-
-
-
+        setContentView(R.layout.history);
 
         // Get the Intent that started this activity and extract the string
-        Intent intent = getIntent();
+        final Intent intent = getIntent();
         String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
-
-        // Capture the layout's TextView and set the string as its text
-        final TextView coordsOut = findViewById(R.id.Textoutput1);
-        final TextView TempOut = findViewById(R.id.Temp);
-        final TextView TempBanner = findViewById(R.id.tempbanner);
-
-
-
-
-
-        // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url="";
-        if ((message.length()) >=18 ){
+        JSONObject reader = null;
+        try {
+            reader = new JSONObject(message);
+            JSONObject coord = reader.getJSONObject("coord");
+            String lat = coord.getString("lat");
+            String lon = coord.getString("lon");
+            JSONObject sys = reader.getJSONObject("sys");
+            String sunrise = sys.getString("sunrise");
 
-            String[] words = message.split(",");
-            String lat= words[0];
-            String lon= words[1];
-            url="https://api.openweathermap.org/data/2.5/weather?lat="+lat+"&lon="+lon+"&appid=74263b9a49d1177a1f44424e8fad66d9";
-        }
-        else if ((message.length()) ==5){
-
-            url = "https://api.openweathermap.org/data/2.5/weather?zip="+message+",us&appid=74263b9a49d1177a1f44424e8fad66d9";
-
-        }
-        else {
-
-            url="https://api.openweathermap.org/data/2.5/weather?q="+message+"&appid=74263b9a49d1177a1f44424e8fad66d9";
-
+            System.out.println(sunrise);
+            String url = "https://api.openweathermap.org/data/2.5/onecall/timemachine?lat=" + lat + "&lon=" + lon + "&dt=" + sunrise + "&appid=74263b9a49d1177a1f44424e8fad66d9";
+            TextView response= findViewById(R.id.H_results);
+            response.setText(url);
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
 
-        //String url = "https://api.openweathermap.org/data/2.5/weather?zip=33076,us&appid=74263b9a49d1177a1f44424e8fad66d9";
-//
-        // Request a string response from the provided URL.
+            final TextView coordsOut = findViewById(R.id.H_results);
+            final TextView day1 = findViewById(R.id.day1);
+            final TextView day2 = findViewById(R.id.day2);
+            final TextView day3 = findViewById(R.id.day3);
+            final TextView day4 = findViewById(R.id.day4);
+            final TextView day5 = findViewById(R.id.day5);
+
+            TextView response= findViewById(R.id.H_results);
+            TextView reply = (TextView) findViewById(R.id.H_results);
+            String url = reply.getText().toString();
+            // Request a string response from the provided URL.
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
 
-                        coordsOut.setText(response);
-                        TextView reply = (TextView) findViewById(R.id.Textoutput1);
-                        String output = reply.getText().toString();
+                       coordsOut.setText(response);
+                        TextView reply = (TextView) findViewById(R.id.H_results);
+                         String output = reply.getText().toString();
+                        coordsOut.setText("Past 5 Days");
                         try {
                             JSONObject reader = new JSONObject(output);
-                            JSONObject coord  = reader.getJSONObject("coord");
-                            JSONObject main  = reader.getJSONObject("main");
-                            JSONObject wind  = reader.getJSONObject("wind");
-                            JSONObject sys  = reader.getJSONObject("sys");
-                            String lat = coord.getString("lat");
-                            String lon = coord.getString("lon");
-                            String T_high = main.getString("temp_max");
-                            String T_low = main.getString("temp_min");
-                            String T_feel = main.getString("feels_like");
-                            String pressure = main.getString("pressure");
-                            String humidity = main.getString("humidity");
-                            String speed = wind.getString("speed");
+                            System.out.println(output);
 
-                            String sunrise = sys.getString("sunrise");
-                            String sunset = sys.getString("sunset");
+                            JSONObject currentObj  = reader.getJSONObject("current");
+                            String current=currentObj.getString("dt");
+                            String currentSun=currentObj.getString("sunrise");
+                            String currentSet=currentObj.getString("sunset");
+                            String currentTemp=currentObj.getString("temp");
+                            String currentF_Temp=currentObj.getString("feels_like");
+                            String currentPress=currentObj.getString("pressure");
+                            String currentHum=currentObj.getString("humidity");
+                            String currentWind=currentObj.getString("wind_speed");
+                            String currentDeg=currentObj.getString("wind_deg");
+                            System.out.println(current);
 
-                            Double temp=Double.parseDouble(T_high);                 //conversions of data
+
+                            Double temp=Double.parseDouble(currentTemp);                 //conversions of data
                             temp= Double.valueOf(Math.round(temp*9/5-459.67   ));
-                            T_high= String.valueOf(temp);
+                            currentTemp= String.valueOf(temp);
 
 
-                            temp=Double.parseDouble(T_low);
+                            temp=Double.parseDouble(currentF_Temp);
                             temp= Double.valueOf(Math.round(temp*9/5-459.67   ));
-                            T_low= String.valueOf(temp);
+                            currentF_Temp= String.valueOf(temp);
 
-                            temp=Double.parseDouble(T_feel);
-                            temp= Double.valueOf(Math.round(temp*9/5-459.67   ));
-                            T_feel= String.valueOf(temp);
 
-                            int temp2=Integer.parseInt(sunset);
+                            int temp2=Integer.parseInt(currentSet);
                             Time date = new Time(temp2);
-                            sunset= String.valueOf(date);
+                            currentSet= String.valueOf(date);
 
-                            temp2=Integer.parseInt(sunrise);
+                            temp2=Integer.parseInt(currentSun);
                             Time date2 = new Time(temp2);
-                            sunrise= String.valueOf(date2);
+                            currentSun= String.valueOf(date2);
 
 
-                            TempBanner.setText("IT FEELS LIKE "+T_feel+"°F Today!!!");
-                            TempOut.setText("Temperature                 High "+T_high+"°F\n                                          Low  "+T_low+"°F \n Humidity:                           "+                        humidity+" % \n Pressure:                         "+                        pressure
-                                    +"hpa \n Wind Speed                         "+speed+"mph \n Sunrise:                         "+sunrise+" AM \n Sunset:                         "+sunset+"pm \n Coordinates:                  "+lon+",  "+lat+"}");
-                            coordsOut.setText(" Coordinates: {"+lon+","+lat+"}");
+                            day1.setText("Temperature             Feels Like "+currentF_Temp+"°F\n                                          Current  "+currentTemp+"°F \n Humidity:                           "+                        currentHum+" % \n Pressure:                           "+                        currentPress
+                                    +"hpa \n Wind Speed                         "+currentWind+"mph \n Wind Degree                        "+currentDeg+ "\n Sunrise:                         "+currentSun+" AM \n Sunset:                          "+currentSet+"pm \n ");
+
+                            Integer currentNum= Integer.parseInt(current);
+                            currentNum=currentNum-(86400);
+                            String current2=currentNum.toString();
+                            System.out.println(current2);
+                            JSONObject currentObj2  = reader.getJSONObject("1604455200");
+                            String currentSun2=currentObj2.getString("sunrise");
+                            String currentSet2=currentObj2.getString("sunset");
+                            String currentTemp2=currentObj2.getString("temp");
+                            String currentF_Temp2=currentObj2.getString("feels_like");
+                            String currentPress2=currentObj2.getString("pressure");
+                            String currentHum2=currentObj2.getString("humidity");
+                            String currentWind2=currentObj2.getString("wind_speed");
+                            String currentDeg2=currentObj2.getString("wind_deg");
+
+
+                            temp = Double.parseDouble(currentTemp2);
+                            temp= Double.valueOf(Math.round(temp*9/5-459.67   ));
+                            currentTemp2= String.valueOf(temp);
+
+
+                            temp=Double.parseDouble(currentF_Temp2);
+                            temp= Double.valueOf(Math.round(temp*9/5-459.67   ));
+                            currentF_Temp2= String.valueOf(temp);
+
+
+                            temp2 = Integer.parseInt(currentSet2);
+                            date = new Time(temp2);
+                            currentSet2= String.valueOf(date);
+
+                            temp2=Integer.parseInt(currentSun2);
+                            date2 = new Time(temp2);
+                            currentSun2= String.valueOf(date2);
+                            day2.setText("Temperature             Feels Like "+currentF_Temp2+"°F\n                                          Current  "+currentTemp2+"°F \n Humidity:                           "+                        currentHum2+" % \n Pressure:                           "+                        currentPress2
+                                    +"hpa \n Wind Speed                         "+currentWind2+"mph \n Wind Degree                        "+currentDeg2+ "\n Sunrise:                         "+currentSun2+" AM \n Sunset:                          "+currentSet2+"pm \n ");
+                            day3.setText("$$$$$$");
 
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        System.out.println(output);
+
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                coordsOut.setText("That didn't work! You may of entered the format incorrectly. Try again or try auto fill location");
+
             }
         });
 
 // Add the request to the RequestQueue.
         queue.add(stringRequest);
 
-
-
     }
+
+
+
+
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -160,3 +182,9 @@ public class HistoryOutput extends AppCompatActivity implements OnMapReadyCallba
     }
 
 }
+
+
+
+
+
+
