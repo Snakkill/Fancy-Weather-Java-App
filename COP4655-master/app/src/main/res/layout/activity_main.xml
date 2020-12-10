@@ -1,0 +1,137 @@
+<?xml version = "1.0" encoding = "utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#000000">
+    <RelativeLayout
+        android:layout_width = "match_parent"
+        android:layout_height = "match_parent"
+        tools:context = ".MainActivity">
+
+
+        <TextView
+                android:id="@+id/text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="30sp" />
+
+
+
+        <LinearLayout
+            android:layout_width = "wrap_content"
+            android:layout_alignParentBottom = "true"
+            android:layout_centerInParent = "true"
+            android:orientation = "vertical"
+            android:layout_height = "wrap_content">
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.google.android.material.bottomnavigation.BottomNavigationView
+                android:id="@+id/bottom_navigation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="1dp"
+                app:itemBackground="@android:color/black"
+                app:itemIconTint="@android:color/holo_red_dark"
+                app:itemTextColor="@android:color/holo_red_dark"
+                app:menu="@menu/bottom_nav_menu" />
+
+            <ImageView
+                android:id="@+id/speak"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+
+                android:layout_marginStart="236dp"
+                android:layout_marginLeft="236dp"
+                android:layout_marginTop="310dp"
+                android:layout_marginEnd="90dp"
+                android:layout_marginRight="100dp"
+                android:layout_marginBottom="668dp"
+                android:background="?selectableItemBackground"
+                android:src="@android:drawable/ic_btn_speak_now" />
+
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/button"
+
+        android:layout_width="159dp"
+        android:layout_height="42dp"
+        android:onClick="getpoints"
+        android:text="AutoFill Location"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.984"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button2"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <EditText
+        android:id="@+id/Text"
+        android:layout_width="297dp"
+        android:layout_height="47dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginLeft="4dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Enter City,city,state,or zip"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.53" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="94dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="344dp"
+        android:onClick="sendMessage"
+        android:text="Search"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/Text"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/Title"
+        android:layout_width="355dp"
+        android:layout_height="43dp"
+        android:layout_marginTop="16dp"
+        android:fontFamily="cursive"
+        android:text="My Fancy Weather App"
+        android:textColor="@android:color/holo_red_dark"
+        android:textSize="36sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.719"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/devTag"
+        android:layout_width="372dp"
+        android:layout_height="38dp"
+        android:layout_marginStart="68dp"
+        android:layout_marginLeft="68dp"
+        android:layout_marginBottom="508dp"
+        android:fontFamily="cursive"
+        android:text="by: Ayman Moubayed (Z23429916)"
+        android:textColor="@android:color/holo_red_dark"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Title"
+        app:layout_constraintVertical_bias="0.0" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
